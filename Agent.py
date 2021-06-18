@@ -53,10 +53,10 @@ def OurModel(input_shape, action_space, lr):
         return loss
         
     Actor = Model(inputs = X_input, outputs = action)
-    Actor.compile(loss=ppo_loss, optimizer=RMSprop(lr=lr))
+    Actor.compile(loss=ppo_loss, optimizer=RMSprop(learning_rate=lr))
 
     Critic = Model(inputs = X_input, outputs = value)
-    Critic.compile(loss='mse', optimizer=RMSprop(lr=lr))
+    Critic.compile(loss='mse', optimizer=RMSprop(learning_rate=lr))
 
     return Actor, Critic
 
@@ -141,11 +141,9 @@ class PPOAgent:
  
     def load(self, Actor_name, Critic_name):
         self.Actor = load_model(Actor_name, compile=False)
-        #self.Critic = load_model(Critic_name, compile=False)
 
     def save(self):
         self.Actor.save(self.Model_name + '_Actor.h5')
-        #self.Critic.save(self.Model_name + '_Critic.h5')
 
     pylab.figure(figsize=(18, 9))
     def PlotModel(self, score, episode):
